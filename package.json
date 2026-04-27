@@ -1,7 +1,37 @@
 {
-  "name": "bantwara-schedule-generator",
+  "name": "bantwara",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "Bantwara – Land Division & Property Schedule Generator (बंटवारा सॉफ्टवेयर). Professional jameen/jamin bantwara and property division schedule generator for Bihar land records.",
+  "homepage": "https://bantwara.net2coder.in",
+  "author": {
+    "name": "net2coder",
+    "email": "info@net2coder.in",
+    "url": "https://net2coder.in"
+  },
+  "contributors": [
+    {
+      "name": "Alok Kushwaha",
+      "url": "https://net2coder.in"
+    }
+  ],
+  "keywords": [
+    "bantwara",
+    "बंटवारा",
+    "land-division",
+    "property-schedule",
+    "jameen-bantwara",
+    "jamin-bantwara",
+    "Bihar",
+    "land-records"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/net2coder/bihar-land-schedule-generator"
+  },
+  "bugs": {
+    "url": "https://github.com/net2coder/bihar-land-schedule-generator/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

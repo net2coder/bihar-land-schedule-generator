@@ -1,0 +1,28 @@
+# Bantwara – Land Division & Property Schedule Generator
+# SEO Robots Configuration
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /.well-known/
+
+# Crawl delay (in seconds)
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://bantwara.net2coder.in/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Facebook
+User-agent: facebookexternalhit
+Allow: /

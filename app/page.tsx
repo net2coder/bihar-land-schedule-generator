@@ -8,6 +8,7 @@ import { Toolbar } from "@/components/Controls/Toolbar";
 import { PrintFooter } from "@/components/Print/PrintFooter";
 import { TotalsBar } from "@/components/TotalsBar";
 import { PrintPaginatedLayout } from "@/components/Print/PrintPaginatedLayout";
+import { DataRecoveryBanner } from "@/components/DataRecoveryBanner";
 
 export default function Home() {
   const [isPrinting, setIsPrinting] = useState(false);
@@ -40,14 +41,16 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen text-slate-950 print:bg-white pb-12">
-      <div className="mx-auto max-w-[1600px] px-4 py-6 print:max-w-none print:px-0 print:py-0">
-        {!isPrinting ? (
-          <>
-            <Toolbar />
-            <section className="document-shell mx-auto">
-              <HeaderForm />
-              <TotalsBar />
+    <>
+      <DataRecoveryBanner />
+      <main className="min-h-screen text-slate-950 print:bg-white pb-12">
+        <div className="mx-auto max-w-[1600px] px-4 py-6 print:max-w-none print:px-0 print:py-0">
+          {!isPrinting ? (
+            <>
+              <Toolbar />
+              <section className="document-shell mx-auto">
+                <HeaderForm />
+                <TotalsBar />
               <LandTable />
               <PrintFooter />
             </section>
@@ -55,6 +58,7 @@ export default function Home() {
         ) : null}
         {isPrinting ? <PrintPaginatedLayout /> : null}
       </div>
-    </main>
+      </main>
+    </>
   );
 }
