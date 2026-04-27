@@ -2,12 +2,8 @@
 
 import { formatArea, getAllDivisionTotal, getDivisionTotal, getOriginalTotal } from "@/lib/calculator";
 import { useScheduleStore } from "@/lib/store";
+import { chunkRowsByPageSize, rowOffsetForPage, ROW_HEIGHT_MM, printableWidth, printableHeight } from "@/lib/printConfig";
 import type { BoundaryField, ParcelField, ScheduleRow } from "@/lib/types";
-
-/** Rows that fit on page 1 — header takes up some vertical space. */
-const ROWS_PER_FIRST_PAGE = 8;
-/** Rows that fit on pages 2+ — no header, more room. Adjust to taste. */
-const ROWS_PER_OTHER_PAGES = 9;
 
 const parcelFields: Array<{ field: ParcelField; label: string }> = [
   { field: "jamabandi", label: "जमाबंदी नं." },
@@ -28,20 +24,6 @@ const boundaryRows: Array<Array<{ field: BoundaryField; label: string }>> = [
     { field: "west", label: "प." },
   ],
 ];
-
-function chunkRows(rows: ScheduleRow[]) {
-  const chunks: ScheduleRow[][] = [];
-
-  // Page 1: limited by header height
-  chunks.push(rows.slice(0, ROWS_PER_FIRST_PAGE));
-
-  // Pages 2+: no header so more rows fit
-  for (let index = ROWS_PER_FIRST_PAGE; index < rows.length; index += ROWS_PER_OTHER_PAGES) {
-    chunks.push(rows.slice(index, index + ROWS_PER_OTHER_PAGES));
-  }
-
-  return chunks.length ? chunks : [[]];
-}
 
 function divisionTotals(rows: ScheduleRow[], personCount: number) {
   return Array.from({ length: personCount }).map((_, index) => getDivisionTotal(rows, index));
@@ -162,8 +144,10 @@ function PrintBoundary({ row, divisionIndex }: { row: ScheduleRow; divisionIndex
           <tr key={rowIndex}>
             {boundaryRow.map(({ field, label }) => (
               <td key={field}>
-                <span>{label}</span>
-                <strong>{row.divisions[divisionIndex].boundary[field]}</strong>
+                <div className="print-boundary-cell">
+                  <span>{label}</span>
+                  <strong>{row.divisions[divisionIndex].boundary[field]}</strong>
+                </div>
               </td>
             ))}
           </tr>
@@ -223,7 +207,7 @@ function PrintRowsTable({
         </thead>
         <tbody>
           {pageRows.map((row, rowIndex) => (
-            <tr key={row.id}>
+            <tr key={row.id} style={{ height: `${ROW_HEIGHT_MM}mm` }}>
               <td>{rowOffset + rowIndex + 1}</td>
               {parcelFields.map(({ field }) => (
                 <td key={field}>{row.original[field]}</td>
@@ -261,27 +245,42 @@ function PrintSignatures() {
   );
 }
 
-/** Returns how many rows precede a given page — needed for totals and row numbering. */
-function rowOffsetForPage(pageIndex: number) {
-  if (pageIndex === 0) return 0;
-  return ROWS_PER_FIRST_PAGE + (pageIndex - 1) * ROWS_PER_OTHER_PAGES;
-}
-
 export function PrintPaginatedLayout() {
   const rows = useScheduleStore((state) => state.rows);
   const personCount = useScheduleStore((state) => state.personCount);
-  const pages = chunkRows(rows);
+  const { paperSize, orientation } = useScheduleStore((state) => state.printSettings);
+
+  const pages = chunkRowsByPageSize(rows, paperSize, orientation);
+
+  const pWidth = printableWidth(paperSize, orientation);
+  const pHeight = printableHeight(paperSize, orientation);
 
   return (
-    <section className="app-print-only print-layout">
-      {pages.map((pageRows, pageIndex) => {
-        const offset = rowOffsetForPage(pageIndex);
-        const previousRows = rows.slice(0, offset);
-        const isFinalPage = pageIndex === pages.length - 1;
+    <>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @page { size: ${paperSize} ${orientation}; margin: 8mm; }
+          @media print {
+            html, body {
+              width: ${pWidth + 16}mm;
+              min-height: ${pHeight + 16}mm;
+            }
+          }
+        `
+      }} />
+      <section className="app-print-only print-layout" style={{ width: `${pWidth + 16}mm` }}>
+        {pages.map((pageRows, pageIndex) => {
+          const offset = rowOffsetForPage(pageIndex, paperSize, orientation);
+          const previousRows = rows.slice(0, offset);
+          const isFinalPage = pageIndex === pages.length - 1;
 
-        return (
-          <article className="print-page" key={pageIndex}>
-            {pageIndex === 0 ? <PrintMetadata /> : null}
+          return (
+            <article
+              className="print-page"
+              key={pageIndex}
+              style={{ minHeight: `${pHeight}mm`, height: `${pHeight}mm` }}
+            >
+              {pageIndex === 0 ? <PrintMetadata /> : null}
             <PrintRowsTable pageRows={pageRows} rowOffset={offset} />
             <div className="print-page-bottom">
               <PrintTotalsFooter
@@ -296,6 +295,7 @@ export function PrintPaginatedLayout() {
           </article>
         );
       })}
-    </section>
+      </section>
+    </>
   );
 }

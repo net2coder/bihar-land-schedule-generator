@@ -5,9 +5,12 @@ import type {
   BoundaryField,
   DivisionParcel,
   MetadataFields,
+  Orientation,
+  PaperSize,
   Parcel,
   ParcelField,
   PersonCount,
+  PrintSettings,
   ScheduleRow,
   SortMode,
 } from "@/lib/types";
@@ -42,10 +45,12 @@ type ScheduleState = {
   divisionNames: [string, string, string];
   personCount: PersonCount;
   transliteration: boolean;
+  printSettings: PrintSettings;
   updateMetadata: (field: keyof MetadataFields, value: string) => void;
   updateDivisionName: (index: number, value: string) => void;
   setPersonCount: (count: PersonCount) => void;
   setTransliteration: (enabled: boolean) => void;
+  setPrintSettings: (settings: Partial<{ paperSize: PaperSize; orientation: Orientation }>) => void;
   updateOriginal: (rowId: string, field: ParcelField, value: string) => void;
   updateDivision: (rowId: string, index: number, field: ParcelField, value: string) => void;
   updateBoundary: (rowId: string, index: number, field: BoundaryField, value: string) => void;
@@ -71,6 +76,7 @@ export const useScheduleStore = create<ScheduleState>((set) => ({
   divisionNames: ["", "", ""],
   personCount: 2,
   transliteration: true,
+  printSettings: { paperSize: "A4", orientation: "landscape" },
   updateMetadata: (field, value) =>
     set((state) => ({
       metadata: { ...state.metadata, [field]: value },
@@ -83,6 +89,8 @@ export const useScheduleStore = create<ScheduleState>((set) => ({
     })),
   setPersonCount: (count) => set({ personCount: count }),
   setTransliteration: (enabled) => set({ transliteration: enabled }),
+  setPrintSettings: (settings) =>
+    set((state) => ({ printSettings: { ...state.printSettings, ...settings } })),
   updateOriginal: (rowId, field, value) =>
     set((state) => ({
       rows: state.rows.map((row) =>

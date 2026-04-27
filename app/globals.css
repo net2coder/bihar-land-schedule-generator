@@ -52,17 +52,13 @@ textarea:focus {
 }
 
 .print-layout {
-  width: 297mm;
-  max-width: 100%;
   margin: 0 auto;
   background: #fff;
   color: #000;
 }
 
 .print-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 194mm;
+  display: block;
   border: 1px solid #cbd5e1;
   background: #fff;
   padding: 0;
@@ -116,16 +112,14 @@ textarea:focus {
 }
 
 .print-schedule-table-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  display: block;
   overflow: hidden;
 }
 
 .print-schedule-table {
   width: 100%;
-  height: 100%;
   margin-top: 2mm;
+  margin-bottom: 2mm;
   border-collapse: collapse;
   table-layout: auto;
   font-size: 7.5px;
@@ -166,12 +160,7 @@ textarea:focus {
   font-weight: 800;
 }
 
-.print-schedule-table tbody {
-  height: 100%;
-}
-
 .print-schedule-table tbody>tr {
-  height: 1px; /* evenly distributes remaining height across rows */
   break-inside: avoid;
   page-break-inside: avoid;
 }
@@ -185,6 +174,7 @@ textarea:focus {
 
 .print-schedule-table .print-boundary-table td {
   width: 50%;
+  height: 100%;
   border: 0;
   padding: 0;
 }
@@ -197,20 +187,29 @@ textarea:focus {
   border-right: 1px solid #000;
 }
 
-.print-boundary-table td {
-  text-align: left;
+.print-boundary-cell {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: stretch;
+  height: 100%;
+  min-height: 9mm;
 }
 
-.print-boundary-table span {
-  display: inline-block;
-  width: 4mm;
-  text-align: center;
+.print-boundary-cell span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px dotted #94a3b8;
+  font-size: 11px;
   font-weight: 800;
+  height: 100%;
 }
 
-.print-boundary-table strong {
+.print-boundary-cell strong {
+  display: block;
   font-weight: 500;
   overflow-wrap: anywhere;
+  padding: 1px 2px;
 }
 
 .print-page-bottom {
@@ -568,17 +567,10 @@ textarea:focus {
   font-weight: 800;
 }
 
-@page {
-  size: A4 landscape;
-  margin: 8mm;
-}
-
 @media print {
 
   html,
   body {
-    width: 297mm;
-    min-height: 210mm;
     background: #fff;
   }
 
@@ -615,9 +607,7 @@ textarea:focus {
   }
 
   .print-page {
-    display: flex;
-    flex-direction: column;
-    height: 194mm;
+    display: block;
     page-break-after: always;
     break-after: page;
     break-inside: avoid;
@@ -673,16 +663,14 @@ textarea:focus {
   }
 
   .print-schedule-table-wrap {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    display: block;
     overflow: hidden;
   }
 
   .print-schedule-table {
     width: 100%;
-    height: 100%;
     margin-top: 2mm;
+    margin-bottom: 2mm;
     border-collapse: collapse;
     table-layout: auto;
     font-size: 7.5px;
@@ -699,16 +687,6 @@ textarea:focus {
   .print-schedule-table th {
     background: #e5e7eb !important;
     font-weight: 800;
-  }
-
-  .print-schedule-table tbody {
-    height: 100%;
-  }
-
-  .print-schedule-table tbody>tr {
-    height: 1px;
-    break-inside: avoid;
-    page-break-inside: avoid;
   }
 
   .print-schedule-table tr,
@@ -728,6 +706,7 @@ textarea:focus {
 
   .print-schedule-table .print-boundary-table td {
     width: 50%;
+    height: 100%;
     border: 0;
     padding: 0;
   }
@@ -740,20 +719,29 @@ textarea:focus {
     border-right: 1px solid #000;
   }
 
-  .print-boundary-table td {
-    text-align: left;
+  .print-boundary-cell {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    align-items: stretch;
+    height: 100%;
+    min-height: 9mm;
   }
 
-  .print-boundary-table span {
-    display: inline-block;
-    width: 4mm;
-    text-align: center;
+  .print-boundary-cell span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px dotted #000;
+    font-size: 11px;
     font-weight: 800;
+    height: 100%;
   }
 
-  .print-boundary-table strong {
+  .print-boundary-cell strong {
+    display: block;
     font-weight: 500;
     overflow-wrap: anywhere;
+    padding: 1px 2px;
   }
 
   .print-page-bottom {

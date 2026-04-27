@@ -2,6 +2,14 @@ export type PersonCount = 2 | 3;
 
 export type SortMode = "asc" | "desc";
 
+export type PaperSize = "A4" | "A3" | "Letter";
+export type Orientation = "landscape" | "portrait";
+
+export type PrintSettings = {
+  paperSize: PaperSize;
+  orientation: Orientation;
+};
+
 export type Parcel = {
   jamabandi: string;
   khata: string;
