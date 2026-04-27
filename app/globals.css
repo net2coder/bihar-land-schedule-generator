@@ -1,0 +1,946 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --ink: #0f172a;
+  --line: #1f2937;
+  --paper: #ffffff;
+  --muted: #64748b;
+  --accent: #0f766e;
+  --warn: #b45309;
+  --danger: #b91c1c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans Devanagari", "Mangal", "Kohinoor Devanagari", Arial, sans-serif;
+}
+
+input,
+textarea {
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+input:focus,
+textarea:focus {
+  background: #fff7ed;
+  box-shadow: inset 0 0 0 1px #f59e0b;
+}
+
+.document-shell {
+  min-height: 800px;
+  border: 1px solid #cbd5e1;
+}
+
+.app-print-only,
+.print-layout {
+  display: block;
+}
+
+.print-layout {
+  width: 297mm;
+  max-width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  color: #000;
+}
+
+.print-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 194mm;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  padding: 0;
+}
+
+.print-page+.print-page {
+  margin-top: 8mm;
+}
+
+.print-page-header {
+  border-bottom: 1px solid #000;
+  padding-bottom: 2mm;
+}
+
+.print-page-header h1 {
+  margin: 0 0 2mm;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.print-metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5mm 4mm;
+  font-size: 9px;
+}
+
+.print-metadata-grid div,
+.print-signature-row div {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 2mm;
+  align-items: end;
+}
+
+.print-metadata-grid .wide {
+  grid-column: span 2;
+}
+
+.print-metadata-grid span,
+.print-signature-row span {
+  font-weight: 800;
+}
+
+.print-metadata-grid strong,
+.print-signature-row strong {
+  min-height: 4mm;
+  border-bottom: 1px dotted #000;
+  font-weight: 500;
+}
+
+.print-schedule-table-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.print-schedule-table {
+  width: 100%;
+  height: 100%;
+  margin-top: 2mm;
+  border-collapse: collapse;
+  table-layout: auto;
+  font-size: 7.5px;
+}
+
+.print-layout .col-serial {
+  min-width: 18px;
+}
+
+.print-layout .col-jamabandi {
+  min-width: 30px;
+}
+
+.print-layout .col-khata,
+.print-layout .col-khesra {
+  min-width: 28px;
+}
+
+.print-layout .col-area {
+  min-width: 30px;
+}
+
+.print-layout .col-boundary {
+  width: auto;
+}
+
+.print-schedule-table th,
+.print-schedule-table td {
+  border: 1px solid #000;
+  padding: 1px;
+  text-align: center;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+
+.print-schedule-table th {
+  background: #e5e7eb;
+  font-weight: 800;
+}
+
+.print-schedule-table tbody {
+  height: 100%;
+}
+
+.print-schedule-table tbody>tr {
+  height: 1px; /* evenly distributes remaining height across rows */
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.print-boundary-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.print-schedule-table .print-boundary-table td {
+  width: 50%;
+  border: 0;
+  padding: 0;
+}
+
+.print-schedule-table .print-boundary-table tr:first-child td {
+  border-bottom: 1px solid #000;
+}
+
+.print-schedule-table .print-boundary-table td:first-child {
+  border-right: 1px solid #000;
+}
+
+.print-boundary-table td {
+  text-align: left;
+}
+
+.print-boundary-table span {
+  display: inline-block;
+  width: 4mm;
+  text-align: center;
+  font-weight: 800;
+}
+
+.print-boundary-table strong {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.print-page-bottom {
+  flex-shrink: 0;
+}
+
+.print-page-totals {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9px;
+}
+
+.print-page-totals th,
+.print-page-totals td {
+  border: 1px solid #000;
+  padding: 1.5mm 2mm;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.print-page-totals th {
+  width: 28mm;
+  background: #e5e7eb;
+  font-weight: 800;
+}
+
+.print-page-totals td span {
+  margin-right: 2mm;
+  color: #334155;
+  font-weight: 800;
+}
+
+.print-page-totals td strong {
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.print-total-emphasis th,
+.print-total-emphasis td {
+  background: #f8fafc;
+}
+
+.print-signature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32mm;
+  margin-top: 3mm;
+  font-size: 10px;
+}
+
+.tool-button,
+.segmented-control button,
+.icon-button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.tool-button {
+  padding: 0 12px;
+}
+
+.tool-button:hover,
+.segmented-control button:hover,
+.icon-button:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
+.tool-button.active,
+.segmented-control button.active {
+  border-color: #0f766e;
+  background: #ccfbf1;
+  color: #134e4a;
+}
+
+.tool-button.primary {
+  border-color: #0f766e;
+  background: #0f766e;
+  color: #fff;
+}
+
+.segmented-control {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(76px, 1fr));
+}
+
+.segmented-control button {
+  border-radius: 0;
+  padding: 0 10px;
+}
+
+.segmented-control button:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.segmented-control button:last-child {
+  border-left: 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.field-line {
+  display: grid;
+  grid-template-columns: max-content minmax(80px, 1fr);
+  align-items: end;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.field-line input {
+  min-height: 28px;
+  border-bottom: 1px dotted var(--line);
+  padding: 1px 4px;
+  font-weight: 500;
+}
+
+.totals-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  background: #f8fafc;
+}
+
+.totals-strip>div {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  border-right: 1px solid #cbd5e1;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.totals-strip span {
+  color: #475569;
+  font-weight: 650;
+}
+
+.totals-strip strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.total-valid {
+  color: #047857;
+}
+
+.total-invalid {
+  color: var(--warn);
+}
+
+.table-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--ink);
+  table-layout: fixed;
+}
+
+.col-serial {
+  width: 28px;
+}
+
+.col-jamabandi {
+  width: 52px;
+}
+
+.col-khata,
+.col-khesra {
+  width: 48px;
+}
+
+.col-area {
+  width: 52px;
+}
+
+.col-boundary {
+  /* takes remaining space via table-layout: fixed */
+}
+
+.col-action {
+  width: 38px;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid var(--line);
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.schedule-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #e2e8f0;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  padding: 4px 2px;
+}
+
+.schedule-table thead tr:first-child th {
+  background: #cbd5e1;
+  font-size: 12px;
+}
+
+.division-name-header {
+  display: grid;
+  grid-template-columns: max-content minmax(90px, 1fr);
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+}
+
+.division-name-header span {
+  white-space: nowrap;
+}
+
+.division-name-header input {
+  min-height: 22px;
+  border-bottom: 1px dotted var(--line);
+  padding: 0 3px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.schedule-table td input {
+  min-height: 30px;
+  padding: 3px 3px;
+  text-align: center;
+  font-size: 12px;
+  max-width: none;
+}
+
+.schedule-table tbody tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.boundary-grid-cell {
+}
+
+.boundary-mini-table {
+  width: 100%;
+  min-height: 60px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.schedule-table .boundary-mini-table td {
+  width: 50%;
+  min-height: 30px;
+  border: 0;
+  background: transparent;
+}
+
+.schedule-table .boundary-mini-table tr:first-child td {
+  border-bottom: 1px solid var(--line);
+}
+
+.schedule-table .boundary-mini-table td:first-child {
+  border-right: 1px solid var(--line);
+}
+
+.boundary-input {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: stretch;
+  min-height: 34px;
+}
+
+.boundary-input span {
+  height: 100%;
+  border-right: 1px dotted #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.boundary-input textarea {
+  width: 100%;
+  min-height: 34px;
+  padding: 5px 6px;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+  resize: vertical;
+}
+
+.numeric-input {
+  font-variant-numeric: tabular-nums;
+}
+
+.serial-col {
+  width: 32px;
+  font-weight: 800;
+}
+
+.action-col {
+  width: 48px;
+}
+
+.icon-button {
+  width: 30px;
+  min-height: 30px;
+  padding: 0;
+}
+
+.icon-button.danger {
+  color: var(--danger);
+}
+
+.add-row-strip {
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background: #f8fafc;
+  padding: 8px;
+}
+
+.boundary-cell {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+}
+
+.boundary-cell span {
+  font-weight: 800;
+}
+
+@page {
+  size: A4 landscape;
+  margin: 8mm;
+}
+
+@media print {
+
+  html,
+  body {
+    width: 297mm;
+    min-height: 210mm;
+    background: #fff;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .app-print-only,
+  .app-print-only * {
+    visibility: visible !important;
+  }
+
+  .document-shell,
+  .document-shell * {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  .app-print-only,
+  .print-layout {
+    display: block !important;
+  }
+
+  .print-layout {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    max-width: none;
+    transform: none;
+  }
+
+  .print-page {
+    display: flex;
+    flex-direction: column;
+    height: 194mm;
+    page-break-after: always;
+    break-after: page;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .print-page-header {
+    border-bottom: 1px solid #000;
+    padding-bottom: 2mm;
+  }
+
+  .print-page-header h1 {
+    margin: 0 0 2mm;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .print-metadata-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5mm 4mm;
+    font-size: 9px;
+  }
+
+  .print-metadata-grid div,
+  .print-signature-row div {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 2mm;
+    align-items: end;
+  }
+
+  .print-metadata-grid .wide {
+    grid-column: span 2;
+  }
+
+  .print-metadata-grid span,
+  .print-signature-row span {
+    font-weight: 800;
+  }
+
+  .print-metadata-grid strong,
+  .print-signature-row strong {
+    min-height: 4mm;
+    border-bottom: 1px dotted #000;
+    font-weight: 500;
+  }
+
+  .print-schedule-table-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .print-schedule-table {
+    width: 100%;
+    height: 100%;
+    margin-top: 2mm;
+    border-collapse: collapse;
+    table-layout: auto;
+    font-size: 7.5px;
+  }
+
+  .print-schedule-table th,
+  .print-schedule-table td {
+    border: 1px solid #000;
+    padding: 1px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .print-schedule-table th {
+    background: #e5e7eb !important;
+    font-weight: 800;
+  }
+
+  .print-schedule-table tbody {
+    height: 100%;
+  }
+
+  .print-schedule-table tbody>tr {
+    height: 1px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-schedule-table tr,
+  .print-schedule-table td,
+  .print-boundary-table tr,
+  .print-boundary-table td {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-boundary-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .print-schedule-table .print-boundary-table td {
+    width: 50%;
+    border: 0;
+    padding: 0;
+  }
+
+  .print-schedule-table .print-boundary-table tr:first-child td {
+    border-bottom: 1px solid #000;
+  }
+
+  .print-schedule-table .print-boundary-table td:first-child {
+    border-right: 1px solid #000;
+  }
+
+  .print-boundary-table td {
+    text-align: left;
+  }
+
+  .print-boundary-table span {
+    display: inline-block;
+    width: 4mm;
+    text-align: center;
+    font-weight: 800;
+  }
+
+  .print-boundary-table strong {
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+
+  .print-page-bottom {
+    flex-shrink: 0;
+  }
+
+  .print-page-totals {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+  }
+
+  .print-page-totals th,
+  .print-page-totals td {
+    border: 1px solid #000;
+    padding: 1.5mm 2mm;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .print-page-totals th {
+    width: 28mm;
+    background: #e5e7eb !important;
+    font-weight: 800;
+  }
+
+  .print-page-totals td span {
+    margin-right: 2mm;
+    color: #334155;
+    font-weight: 800;
+  }
+
+  .print-page-totals td strong {
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .print-total-emphasis th,
+  .print-total-emphasis td {
+    background: #f8fafc !important;
+  }
+
+  .print-signature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32mm;
+    margin-top: 3mm;
+    font-size: 10px;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  .schedule-table {
+    width: 100%;
+    min-width: 0;
+    table-layout: auto;
+    page-break-inside: auto;
+  }
+
+  .col-serial {
+    width: 18px;
+  }
+
+  .col-jamabandi {
+    width: 30px;
+  }
+
+  .col-khata,
+  .col-khesra {
+    width: 28px;
+  }
+
+  .col-area {
+    width: 30px;
+  }
+
+  .col-boundary {
+    width: auto;
+  }
+
+  .schedule-table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .schedule-table th {
+    position: static;
+    background: #e5e7eb !important;
+    color: #000;
+    font-size: 8.5px;
+    padding: 2px 1px;
+  }
+
+  .schedule-table thead tr:first-child th {
+    font-size: 9px;
+  }
+
+  .division-name-header {
+    grid-template-columns: max-content minmax(38px, 1fr);
+    gap: 3px;
+    padding: 0 2px;
+  }
+
+  .division-name-header input {
+    min-height: 14px;
+    padding: 0 1px;
+    font-size: 8.5px;
+    color: #000;
+  }
+
+  .schedule-table td input {
+    min-height: 22px;
+    padding: 1px;
+    font-size: 8.5px;
+    color: #000;
+  }
+
+  .boundary-heading,
+  .boundary-grid-cell {
+    width: auto;
+  }
+
+  .boundary-mini-table {
+    min-height: 44px;
+  }
+
+  .schedule-table .boundary-mini-table td {
+    min-height: 22px;
+  }
+
+  .schedule-table .boundary-mini-table tr:first-child td,
+  .schedule-table .boundary-mini-table td:first-child {
+    border-color: #000;
+  }
+
+  .boundary-input {
+    grid-template-columns: 14px minmax(50px, max-content);
+    min-height: 24px;
+  }
+
+  .boundary-input span {
+    border-color: #000;
+    font-size: 8px;
+  }
+
+  .boundary-input textarea {
+    min-height: 24px;
+    padding: 2px 3px;
+    font-size: 8px;
+    line-height: 1.15;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    border-color: #000;
+  }
+
+  .serial-col {
+    width: 22px;
+  }
+
+  .totals-strip {
+    background: #fff;
+    border-color: #000;
+  }
+
+  .totals-strip>div {
+    min-height: 24px;
+    padding: 2px 6px;
+    border-color: #000;
+    font-size: 9px;
+  }
+
+  .field-line {
+    font-size: 10px;
+  }
+
+  .field-line input {
+    min-height: 18px;
+    color: #000;
+  }
+
+  input:focus,
+  textarea:focus {
+    background: transparent;
+    box-shadow: none;
+  }
+}
