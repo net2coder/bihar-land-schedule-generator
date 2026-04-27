@@ -992,7 +992,7 @@ export const directWords: Record<string, string> = {
   nandkishore: "नंदकिशोर",
   ramkishor: "रामकिशोर",
   ramkishore: "रामकिशोर",
-  yugalkishor: "युगलकिशोर",
+  yugalkishore: "युगलकिशोर",
   nawalkishor: "नवलकिशोर",
   nawalkishore: "नवलकिशोर",
   shivkishor: "शिवकिशोर",
