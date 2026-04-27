@@ -1050,7 +1050,6 @@ export const directWords: Record<string, string> = {
   kamesh: "कामेश",
   virendra: "वीरेंद्र",
   rajendra: "राजेंद्र",
-  nagendra: "नागेंद्र",
   amarendra: "अमरेंद्र",
   samarendra: "समरेंद्र",
   akhilesh: "अखिलेश",
