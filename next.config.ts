@@ -6,9 +6,6 @@ const nextConfig: NextConfig = {
     root: process.cwd(),
   },
   
-  // Domain configuration
-  domains: ["bantwara.net2coder.in", "net2coder.in"],
-  
   // Headers for SEO and security
   async headers() {
     return [
