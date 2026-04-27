@@ -15,7 +15,7 @@ export function Toolbar() {
   const setPrintSettings = useScheduleStore((state) => state.setPrintSettings);
 
   return (
-    <div className="no-print sticky top-0 z-10 mb-3 flex flex-wrap items-center gap-2 rounded-md border border-slate-200 bg-white p-2 shadow-sm">
+    <div className="no-print sticky top-4 z-20 mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white/90 p-3 shadow-md backdrop-blur-md transition-all">
       <div className="segmented-control" aria-label="व्यक्ति संख्या">
         <button
           className={personCount === 2 ? "active" : ""}
@@ -39,27 +39,27 @@ export function Toolbar() {
         onClick={() => setTransliteration(!transliteration)}
         title="Hindi transliteration"
       >
-        <Languages size={16} />
+        <Languages size={18} />
         हिंदी
       </button>
 
       <button className="tool-button" type="button" onClick={() => sortRows("asc")} title="Sort khesra ascending">
-        <ArrowUpNarrowWide size={16} />
+        <ArrowUpNarrowWide size={18} />
         खेसरा
       </button>
       <button className="tool-button" type="button" onClick={() => sortRows("desc")} title="Sort khesra descending">
-        <ArrowDownNarrowWide size={16} />
+        <ArrowDownNarrowWide size={18} />
         खेसरा
       </button>
 
       <button className="tool-button" type="button" onClick={addRow}>
-        <Plus size={16} />
+        <Plus size={18} />
         पंक्ति
       </button>
 
-      <div className="ml-auto mr-2 flex items-center gap-2">
+      <div className="ml-auto mr-1 flex items-center gap-2">
         <select
-          className="tool-select"
+          className="h-[38px] rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-600 outline-none transition-all hover:bg-slate-50 focus:border-teal-600 focus:ring-1 focus:ring-teal-600"
           value={printSettings.paperSize}
           onChange={(e) => setPrintSettings({ paperSize: e.target.value as PaperSize })}
         >
@@ -68,7 +68,7 @@ export function Toolbar() {
           <option value="Letter">Letter</option>
         </select>
         <select
-          className="tool-select"
+          className="h-[38px] rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-600 outline-none transition-all hover:bg-slate-50 focus:border-teal-600 focus:ring-1 focus:ring-teal-600"
           value={printSettings.orientation}
           onChange={(e) => setPrintSettings({ orientation: e.target.value as Orientation })}
         >
@@ -78,7 +78,7 @@ export function Toolbar() {
       </div>
 
       <button className="tool-button primary" type="button" onClick={() => window.print()}>
-        <Printer size={16} />
+        <Printer size={18} />
         प्रिंट
       </button>
     </div>

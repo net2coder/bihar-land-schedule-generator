@@ -16,6 +16,8 @@
     "zustand": "latest"
   },
   "devDependencies": {
+    "@fontsource/noto-sans-devanagari": "^5.2.8",
+    "@fontsource/yantramanav": "^5.2.7",
     "@tailwindcss/postcss": "latest",
     "@types/node": "latest",
     "@types/react": "latest",

@@ -40,12 +40,12 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#eef1f4] text-slate-950 print:bg-white">
-      <div className="mx-auto max-w-[1600px] px-4 py-4 print:max-w-none print:px-0 print:py-0">
+    <main className="min-h-screen text-slate-950 print:bg-white pb-12">
+      <div className="mx-auto max-w-[1600px] px-4 py-6 print:max-w-none print:px-0 print:py-0">
         {!isPrinting ? (
           <>
             <Toolbar />
-            <section className="document-shell mx-auto bg-white shadow-sm print:shadow-none">
+            <section className="document-shell mx-auto">
               <HeaderForm />
               <TotalsBar />
               <LandTable />

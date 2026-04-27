@@ -26,11 +26,9 @@ export function HeaderForm() {
   };
 
   return (
-    <header className="print-header border-b border-slate-900/70 p-4 print:p-2">
-      <h1 className="text-center text-2xl font-bold tracking-normal print:text-xl">
-        आपसी बंटवारा
-      </h1>
-      <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-4 print:grid-cols-4 print:gap-y-1">
+    <header className="print-header">
+      <h1>आपसी बंटवारा</h1>
+      <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 md:grid-cols-4 print:mt-2 print:grid-cols-4 print:gap-y-1 print:gap-x-4">
         {fields.map((field) => (
           <label
             className={`field-line ${field.wide ? "md:col-span-2 print:col-span-2" : ""}`}

@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
+import { Yantramanav, Noto_Sans_Devanagari } from "next/font/google";
 import "./globals.css";
+
+const yantramanav = Yantramanav({
+  weight: ["400", "500", "700", "900"],
+  subsets: ["devanagari", "latin"],
+  variable: "--font-yantramanav",
+  display: "swap",
+});
+
+const notoSansDevanagari = Noto_Sans_Devanagari({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["devanagari", "latin"],
+  variable: "--font-noto-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "बंटवारा | आपसी बंटवारा जनरेटर",
@@ -19,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="hi">
-      <body suppressHydrationWarning>{children}</body>
+    <html lang="hi" className={`${yantramanav.variable} ${notoSansDevanagari.variable}`}>
+      <body suppressHydrationWarning className="font-sans antialiased">{children}</body>
     </html>
   );
 }
