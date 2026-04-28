@@ -1155,7 +1155,7 @@ export const directWords: Record<string, string> = {
   saat: "सात",
   aath: "आठ",
   nau: "नौ",
-  das: "दस",
+  dash: "दस",
   bees: "बीस",
   pachas: "पचास",
   sau: "सौ",
