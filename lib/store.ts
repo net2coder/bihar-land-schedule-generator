@@ -89,11 +89,9 @@ const defaultState = {
 
 // Get initial state from storage or use defaults
 const getInitialState = () => {
-  if (typeof window === "undefined") return defaultState;
-  if (!isStorageAvailable()) return defaultState;
-
-  const restored = restoreStateFromStorage();
-  return restored || defaultState;
+  // Always return default state on initial load to prevent hydration mismatches.
+  // The client will use the DataRecoveryBanner to restore unsaved data if present.
+  return defaultState;
 };
 
 export const useScheduleStore = create<ScheduleState>((set) => {

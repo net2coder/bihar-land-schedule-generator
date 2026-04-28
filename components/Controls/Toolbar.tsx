@@ -15,7 +15,7 @@ export function Toolbar() {
   const setPrintSettings = useScheduleStore((state) => state.setPrintSettings);
 
   return (
-    <div className="no-print sticky top-4 z-20 mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white/90 p-3 shadow-md backdrop-blur-md transition-all">
+    <div className="no-print mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all">
       <div className="segmented-control" aria-label="व्यक्ति संख्या">
         <button
           className={personCount === 2 ? "active" : ""}
