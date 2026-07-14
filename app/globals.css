@@ -566,6 +566,7 @@ textarea:focus {
     min-height: 4mm;
     border-bottom: 1px dotted #000;
     font-weight: 500;
+    font-size: 12px;
   }
 
   .print-schedule-table-wrap {
@@ -588,6 +589,10 @@ textarea:focus {
     padding: 1px;
     text-align: center;
     vertical-align: middle;
+  }
+
+  .print-schedule-table tbody td {
+    font-size: 12px;
   }
 
   .print-schedule-table th {
@@ -648,6 +653,7 @@ textarea:focus {
     font-weight: 500;
     overflow-wrap: anywhere;
     padding: 1px 2px;
+    font-size: 12px;
   }
 
   .print-page-bottom {
@@ -681,7 +687,7 @@ textarea:focus {
   }
 
   .print-page-totals td strong {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 900;
   }
 
