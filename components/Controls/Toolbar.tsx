@@ -9,6 +9,8 @@ export function Toolbar() {
   const setPersonCount = useScheduleStore((state) => state.setPersonCount);
   const transliteration = useScheduleStore((state) => state.transliteration);
   const setTransliteration = useScheduleStore((state) => state.setTransliteration);
+  const showAbhyukti = useScheduleStore((state) => state.showAbhyukti);
+  const setShowAbhyukti = useScheduleStore((state) => state.setShowAbhyukti);
   const addRow = useScheduleStore((state) => state.addRow);
   const sortRows = useScheduleStore((state) => state.sortRows);
   const printSettings = useScheduleStore((state) => state.printSettings);
@@ -41,6 +43,15 @@ export function Toolbar() {
       >
         <Languages size={18} />
         हिंदी
+      </button>
+
+      <button
+        className={`tool-button ${showAbhyukti ? "active" : ""}`}
+        type="button"
+        onClick={() => setShowAbhyukti(!showAbhyukti)}
+        title="Enable remarks column"
+      >
+        अभ्युक्ति
       </button>
 
       <button className="tool-button" type="button" onClick={() => sortRows("asc")} title="Sort khesra ascending">

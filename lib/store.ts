@@ -43,6 +43,7 @@ const createRow = (): ScheduleRow => ({
   id: crypto.randomUUID(),
   original: emptyParcel(),
   divisions: [emptyDivision(), emptyDivision(), emptyDivision()],
+  abhyukti: "",
 });
 
 type ScheduleState = {
@@ -51,15 +52,18 @@ type ScheduleState = {
   divisionNames: [string, string, string];
   personCount: PersonCount;
   transliteration: boolean;
+  showAbhyukti: boolean;
   printSettings: PrintSettings;
   updateMetadata: (field: keyof MetadataFields, value: string) => void;
   updateDivisionName: (index: number, value: string) => void;
   setPersonCount: (count: PersonCount) => void;
   setTransliteration: (enabled: boolean) => void;
+  setShowAbhyukti: (enabled: boolean) => void;
   setPrintSettings: (settings: Partial<{ paperSize: PaperSize; orientation: Orientation }>) => void;
   updateOriginal: (rowId: string, field: ParcelField, value: string) => void;
   updateDivision: (rowId: string, index: number, field: ParcelField, value: string) => void;
   updateBoundary: (rowId: string, index: number, field: BoundaryField, value: string) => void;
+  updateAbhyukti: (rowId: string, value: string) => void;
   addRow: () => void;
   deleteRow: (rowId: string) => void;
   sortRows: (mode: SortMode) => void;
@@ -84,6 +88,7 @@ const defaultState = {
   divisionNames: ["", "", ""] as [string, string, string],
   personCount: 2 as PersonCount,
   transliteration: true,
+  showAbhyukti: false,
   printSettings: { paperSize: "A4", orientation: "landscape" } as PrintSettings,
 };
 
@@ -104,6 +109,7 @@ export const useScheduleStore = create<ScheduleState>((set) => {
         divisionNames: state.divisionNames,
         personCount: state.personCount,
         transliteration: state.transliteration,
+        showAbhyukti: state.showAbhyukti,
         printSettings: state.printSettings,
       });
     }
@@ -140,6 +146,12 @@ export const useScheduleStore = create<ScheduleState>((set) => {
     setTransliteration: (enabled) =>
       set((state) => {
         const newState = { ...state, transliteration: enabled };
+        saveState(newState);
+        return newState;
+      }),
+    setShowAbhyukti: (enabled) =>
+      set((state) => {
+        const newState = { ...state, showAbhyukti: enabled };
         saveState(newState);
         return newState;
       }),
@@ -199,6 +211,15 @@ export const useScheduleStore = create<ScheduleState>((set) => {
                 }
               : row,
           ),
+        };
+        saveState(newState);
+        return newState;
+      }),
+    updateAbhyukti: (rowId, value) =>
+      set((state) => {
+        const newState = {
+          ...state,
+          rows: state.rows.map((row) => (row.id === rowId ? { ...row, abhyukti: value } : row)),
         };
         saveState(newState);
         return newState;

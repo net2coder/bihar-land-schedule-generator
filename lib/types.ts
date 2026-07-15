@@ -32,6 +32,7 @@ export type ScheduleRow = {
   id: string;
   original: Parcel;
   divisions: [DivisionParcel, DivisionParcel, DivisionParcel];
+  abhyukti?: string;
 };
 
 export type MetadataFields = {

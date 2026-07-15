@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Trash2 } from "lucide-react";
 import { useScheduleStore } from "@/lib/store";
 import type { BoundaryField, ParcelField, ScheduleRow } from "@/lib/types";
@@ -57,6 +58,38 @@ function TableInput({
           onEnter?.();
         }
       }}
+    />
+  );
+}
+
+function AbhyuktiInput({
+  value,
+  onChange,
+  transliteration = false,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  transliteration?: boolean;
+}) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.max(44, textarea.scrollHeight)}px`;
+  }, [value]);
+
+  return (
+    <textarea
+      ref={textareaRef}
+      className="abhyukti-textarea"
+      rows={2}
+      value={value}
+      onChange={(event) =>
+        onChange(transliteration ? transliterateTrailingWord(event.target.value) : event.target.value)
+      }
     />
   );
 }
@@ -133,9 +166,11 @@ export function LandTable() {
   const divisionNames = useScheduleStore((state) => state.divisionNames);
   const updateOriginal = useScheduleStore((state) => state.updateOriginal);
   const updateDivisionName = useScheduleStore((state) => state.updateDivisionName);
+  const updateAbhyukti = useScheduleStore((state) => state.updateAbhyukti);
   const addRow = useScheduleStore((state) => state.addRow);
   const deleteRow = useScheduleStore((state) => state.deleteRow);
   const transliteration = useScheduleStore((state) => state.transliteration);
+  const showAbhyukti = useScheduleStore((state) => state.showAbhyukti);
 
   return (
     <div className="table-wrap">
@@ -152,6 +187,7 @@ export function LandTable() {
             <col className="col-area" key={`${index}-area`} />,
             <col className="col-boundary" key={`${index}-boundary`} />,
           ])}
+          {showAbhyukti ? <col className="col-abhyukti" /> : null}
           <col className="col-action no-print" />
         </colgroup>
         <thead>
@@ -179,7 +215,7 @@ export function LandTable() {
               </th>
             ))}
             <th rowSpan={2} className="action-col no-print">
-              कार्य
+              {showAbhyukti ? "अभ्युक्ति" : "कार्य"}
             </th>
           </tr>
           <tr>
@@ -194,6 +230,7 @@ export function LandTable() {
                 चौहद्दी
               </th>,
             ])}
+            {showAbhyukti && <th className="abhyukti-heading">कार्य</th>}
           </tr>
         </thead>
         <tbody>
@@ -228,6 +265,15 @@ export function LandTable() {
                   }}
                 />
               ))}
+              {showAbhyukti ? (
+                <td className="abhyukti-cell">
+                  <AbhyuktiInput
+                    value={row.abhyukti ?? ""}
+                    onChange={(value) => updateAbhyukti(row.id, value)}
+                    transliteration={transliteration}
+                  />
+                </td>
+              ) : null}
               <td className="action-col no-print">
                 <button
                   className="icon-button danger"

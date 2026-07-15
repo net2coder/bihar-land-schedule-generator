@@ -240,6 +240,34 @@ textarea:focus {
   font-variant-numeric: tabular-nums;
 }
 
+.col-abhyukti {
+  width: 190px;
+}
+
+.abhyukti-cell {
+  min-width: 170px;
+  max-width: 220px;
+  padding: 0;
+  vertical-align: top;
+  background: var(--color-paper);
+}
+
+.abhyukti-heading {
+  min-width: 170px;
+}
+
+.abhyukti-textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 8px;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.45;
+  resize: vertical;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 /* Division Header Input */
 .division-name-header {
   display: grid;
@@ -770,6 +798,14 @@ textarea:focus {
     min-height: 22px;
     padding: 1px;
     font-size: 8.5px;
+    color: #000;
+  }
+
+  .abhyukti-textarea {
+    min-height: 22px;
+    padding: 2px 3px;
+    font-size: 8.5px;
+    line-height: 1.2;
     color: #000;
   }
 

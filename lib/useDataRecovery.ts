@@ -49,6 +49,7 @@ export function useDataRecovery() {
         divisionNames: state.divisionNames,
         personCount: state.personCount,
         transliteration: state.transliteration,
+        showAbhyukti: state.showAbhyukti,
         printSettings: state.printSettings,
       },
       filename,

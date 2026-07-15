@@ -166,6 +166,7 @@ function PrintRowsTable({
 }) {
   const personCount = useScheduleStore((state) => state.personCount);
   const divisionNames = useScheduleStore((state) => state.divisionNames);
+  const showAbhyukti = useScheduleStore((state) => state.showAbhyukti);
 
   return (
     <div className="print-schedule-table-wrap">
@@ -182,6 +183,7 @@ function PrintRowsTable({
             <col className="col-area" key={`${index}-area`} />,
             <col className="col-boundary" key={`${index}-boundary`} />,
           ])}
+          {showAbhyukti ? <col className="col-abhyukti" /> : null}
         </colgroup>
         <thead>
           <tr>
@@ -203,11 +205,12 @@ function PrintRowsTable({
               )),
               <th key={`${divisionIndex}-boundary`}>चौहद्दी</th>,
             ])}
+            {showAbhyukti ? <th>अभ्युक्ति</th> : null}
           </tr>
         </thead>
         <tbody>
           {pageRows.map((row, rowIndex) => (
-            <tr key={row.id} style={{ height: `${ROW_HEIGHT_MM}mm` }}>
+            <tr key={row.id} style={{ minHeight: `${ROW_HEIGHT_MM}mm` }}>
               <td>{rowOffset + rowIndex + 1}</td>
               {parcelFields.map(({ field }) => (
                 <td key={field}>{row.original[field]}</td>
@@ -220,6 +223,7 @@ function PrintRowsTable({
                   <PrintBoundary row={row} divisionIndex={divisionIndex} />
                 </td>,
               ])}
+              {showAbhyukti ? <td className="abhyukti-cell">{row.abhyukti ?? ""}</td> : null}
             </tr>
           ))}
         </tbody>
